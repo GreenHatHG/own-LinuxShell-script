@@ -15,9 +15,10 @@ MainPrint()
             ;;
         4)
             sudo pacman -Syyu
+            ;;
         5)
             wget https://git.io/vS1GH -O - | tar xz
-            cd helmuthdu-aui-9253c5d && ./firefox
+            cd helmuthdu-aui-9253c5d && ./fifo
             ;;
     esac
 }
@@ -178,7 +179,7 @@ InstallGithub()
         sudo pacman -S zsh
         echo "是否安装on-my-zsh?        Y/N?"      
         read s
-        if[ ${s} == Y]
+        if [ ${s} == Y ]
         then
             sudo pacman -S git
             wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh
