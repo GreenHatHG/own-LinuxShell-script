@@ -183,7 +183,7 @@ InstallGithubProject()
         sudo pacman -S zsh
         echo "是否安装on-my-zsh?        Y/N?"      
         read s
-        if [ ${s} == Y ]
+        if [[ ${s} == Y || ${s} == y ]]
         then
             sudo pacman -S git
             wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh
@@ -192,7 +192,7 @@ InstallGithubProject()
             clear
             echo "是否更改主题为agnoster        Y/N"
             read s1
-            if [ ${s1} == Y || ${s1} == y ]
+            if [[ ${s1} == Y || ${s1} == y ]]
             then
             find -name 'pom.xml' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
             wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
@@ -244,7 +244,7 @@ UpdateMirror()
     clear
     echo "是否安装Archlinux CN    Y/N"
     read s
-    if [ ${s} == Y || ${s} == y ]
+    if [[ ${s} == Y || ${s} == y ]]
     then
       str1="[archlinuxcn]"
       str2="Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch"
