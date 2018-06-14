@@ -291,8 +291,8 @@ UpdateMirror()
      fi
     clear
     echo "是否安装Archlinux CN    Y/N"
-    read s
-    if [ ${s} == Y || ${s} == y ]
+    read s1
+    if [ ${s1} == Y || ${s1} == y ]
     then
       str1="[archlinuxcn]"
       str2="Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch"
