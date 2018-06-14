@@ -251,6 +251,7 @@ InstallGithubProject()
             sudo mv PowerlineSymbols.otf /usr/share/fonts/OTF/
             fi
         fi
+       ;;
      3)
          git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/
          BeFound="ZSH_THEME="
@@ -259,16 +260,20 @@ InstallGithubProject()
          line=`sed -n '/$BeFound/=' $filename`
          sed -i "$line d" $filename
          sed -i "$line i$newstr" $filename
+        ;;
      4)
          sudo pacman -S gtk-engine-murrine gtk-engines
          git clone https://github.com/vinceliuice/vimix-gtk-themes.git
          cd vimix-gtk-themes && ./Vimix-installer
+        ;;
      5)
          sudo pacman -S yaourt
          yaourt -S numix-icon-theme-git
+        ;;
      6)
          sudo pacman -S yaourt
          yaourt -S arc-gtk-theme       
+        ;;
     esac
 }
 UpdateMirror()
