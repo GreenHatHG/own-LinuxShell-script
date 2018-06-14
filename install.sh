@@ -239,7 +239,7 @@ UpdateMirror()
       sleep 0.5s
       sudo pacman-mirrors -i -c China -m rank
     else
-      sudo sed -i "1iServer = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch" /etc/pacman.d/mirrorlist
+      sudo sed -i "1iServer = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
     fi
     clear
     echo "是否安装Archlinux CN    Y/N"
@@ -247,9 +247,9 @@ UpdateMirror()
     if [[ ${s} == Y || ${s} == y ]]
     then
       str1="[archlinuxcn]"
-      str2="Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch"
-      sudo echo ${st1} >> /etc/pacman.conf
-      sudo echo ${st2} >> /etc/pacman.conf
+      str2="Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch"
+      sudo echo ${str1} >> /etc/pacman.conf
+      sudo echo ${str2} >> /etc/pacman.conf
       echo "写入完成"
     fi
 }
