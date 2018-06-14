@@ -171,6 +171,7 @@ InstallGithubProject()
     echo "4- Vimix-gtk-theme"
     echo "5- numix-icon-theme-circle"
     echo "6- arc-theme"
+    echo "7- zsh agnoster主题"
     read Selection
     case ${Selection} in
     1)
@@ -189,19 +190,6 @@ InstallGithubProject()
             wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh
             chmod +x install.sh
             ./install.sh
-            clear
-            echo "是否更改主题为agnoster        Y/N"
-            read s1
-            if [[ ${s1} == Y || ${s1} == y ]]
-            then
-            find -name 'pom.xml' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
-            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
-            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
-            cd /usr/share/fonts && sudo mkdir OTF
-            sudo cp 10-powerline-symbols.conf /usr/share/fonts/OTF/ 
-            sudo mv 10-powerline-symbols.conf /etc/fonts/conf.d/
-            sudo mv PowerlineSymbols.otf /usr/share/fonts/OTF/
-            fi
         fi
         ;;
      3)
@@ -226,6 +214,15 @@ InstallGithubProject()
          sudo pacman -S yaourt
          yaourt -S arc-gtk-theme      
          ;; 
+    7)
+        find -name 'pom.xml' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
+            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
+            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
+            cd /usr/share/fonts && sudo mkdir OTF
+            sudo cp 10-powerline-symbols.conf /usr/share/fonts/OTF/ 
+            sudo mv 10-powerline-symbols.conf /etc/fonts/conf.d/
+            sudo mv PowerlineSymbols.otf /usr/share/fonts/OTF/
+            ;;
     esac
 }
 UpdateMirror()
