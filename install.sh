@@ -281,7 +281,7 @@ UpdateMirror()
 
     echo "arch选1， manajro选2"
     read s
-    if[ ${s} == 2 ]
+    if [ ${s} == 2 ]
     then    
       echo "勾选 http://mirrors.ustc.edu.cn/manjaro/ ，然后按 OK 键两次。"
       sleep 0.5s
