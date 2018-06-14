@@ -38,54 +38,6 @@ InstallSoftware()
             InstallProgramAndEditTool
             ;;
         3)
-            InstallGithub
-            ;;
-        esac
-
-}
-
-InstallBrower()
-{
-    clear#!/bin/bash
-MainPrint()
-{
-    echo "1-更新软件源  2-更换源为中科大源  3-安装软件  4-更新系统  5-arch一键安装脚本(by helmuthdu)"
-    read Selection
-    case ${Selection} in
-        1)
-            sudo pacman -Sy
-            ;;
-        2)
-            UpdateMirror
-            ;;
-        3)
-            InstallSoftware
-            ;;
-        4)
-            sudo pacman -Syyu
-            ;;
-        5)
-            wget https://git.io/vS1GH -O - | tar xz
-            cd helmuthdu-aui-9253c5d && ./fifo
-            ;;
-    esac
-}
-
-InstallSoftware()
-{
-    echo "请选择要安装的软件"
-    echo "1-浏览器系列"
-    echo "2-编程开发"
-    echo "3-github项目工具一键安装"
-    read Selection
-    case ${Selection} in
-        1)
-            InstallBrower
-            ;;
-        2)  
-            InstallProgramAndEditTool
-            ;;
-        3)
             InstallGithubProject
             ;;
         esac
@@ -243,15 +195,15 @@ InstallGithubProject()
             if [ ${s1} == Y || ${s1} == y ]
             then
             find -name 'pom.xml' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
-            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
-            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
+            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
+            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
             cd /usr/share/fonts && sudo mkdir OTF
-            sudo cp 10-powerline-symbols.conf /usr/share/fonts/OTF/ 
+            sudo cp 10-powerline-symbols.conf /usr/share/fonts/OTF/ 
             sudo mv 10-powerline-symbols.conf /etc/fonts/conf.d/
             sudo mv PowerlineSymbols.otf /usr/share/fonts/OTF/
             fi
         fi
-       ;;
+        ;;
      3)
          git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/
          BeFound="ZSH_THEME="
@@ -260,20 +212,20 @@ InstallGithubProject()
          line=`sed -n '/$BeFound/=' $filename`
          sed -i "$line d" $filename
          sed -i "$line i$newstr" $filename
-        ;;
+         ;;
      4)
          sudo pacman -S gtk-engine-murrine gtk-engines
          git clone https://github.com/vinceliuice/vimix-gtk-themes.git
          cd vimix-gtk-themes && ./Vimix-installer
-        ;;
+         ;;
      5)
          sudo pacman -S yaourt
          yaourt -S numix-icon-theme-git
-        ;;
+         ;;
      6)
          sudo pacman -S yaourt
-         yaourt -S arc-gtk-theme       
-        ;;
+         yaourt -S arc-gtk-theme      
+         ;; 
     esac
 }
 UpdateMirror()
@@ -288,11 +240,11 @@ UpdateMirror()
       sudo pacman-mirrors -i -c China -m rank
     else
       sudo sed -i "1iServer = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch" /etc/pacman.d/mirrorlist
-     fi
+    fi
     clear
     echo "是否安装Archlinux CN    Y/N"
-    read s1
-    if [ ${s1} == Y || ${s1} == y ]
+    read s
+    if [ ${s} == Y || ${s} == y ]
     then
       str1="[archlinuxcn]"
       str2="Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch"
