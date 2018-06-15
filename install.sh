@@ -193,13 +193,11 @@ InstallGithubProject()
         fi
         ;;
      3)
-         git clone https://github.com/bhilburn/powerlevel9k.git && mv powerlevel9k ~/.oh-my-zsh/custom/themes/
-         BeFound="ZSH_THEME="
-         newstr="ZSH_THEME="powerlevel9k/powerlevel9k""
-         filename=~/Downloads/.zshrc
-         line=`sed -n '/$BeFound/=' $filename`
-         sed -i "$line d" $filename
-         sed -i "$line i$newstr" $filename
+         git clone https://github.com/bhilburn/powerlevel9k.git 
+         mv powerlevel9k ~/.oh-my-zsh/custom/themes/
+         newstr="ZSH_THEME=\"powerlevel9k/powerlevel9k\""
+         sed -i '/ZSH_THEME/d' ~/.zshrc
+         sed -i '9 aZSH_THEME=\"powerlevel9k/powerlevel9k\"' ~/.zshrc
          ;;
      4)
          sudo pacman -S gtk-engine-murrine gtk-engines
@@ -219,7 +217,7 @@ InstallGithubProject()
             wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
             wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
             sudo mkdir /usr/share/fonts/OTF
-            sudo cp 10-powerline-symbols.conf /usr/share/fonts/OTF/ 
+            sudo cp 10-powerline-symbols.conf /usr/share/fonts/OTF/ 
             sudo mv 10-powerline-symbols.conf /etc/fonts/conf.d/
             sudo mv PowerlineSymbols.otf /usr/share/fonts/OTF/
             ;;
@@ -228,28 +226,24 @@ InstallGithubProject()
 UpdateMirror()
 {
 
-    echo "arch选1， manajro选2"
+    echo "arch选1， manajro选2, 3-ArchLinuxCN"
     read s
     if [ ${s} == 2 ]
     then    
       echo "勾选 http://mirrors.ustc.edu.cn/manjaro/ ，然后按 OK 键两次。"
       sleep 0.5s
       sudo pacman-mirrors -i -c China -m rank
-    else
-      sudo sed -i "1iServer = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
-    fi
-    clear
-    echo "是否安装Archlinux CN    Y/N"
-    read s
-    if [[ ${s} == Y || ${s} == y ]]
+    elif [ ${s} == 1 ]
     then
+      sudo sed -i "1iServer = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch" /etc/pacman.d/mirrorlist
+    else
       str1="[archlinuxcn]"
-      str2="Server = https://mirrors.ustc.edu.cn/archlinuxcn/\$arch"
-      sudo echo ${str1} >> /etc/pacman.conf
-      sudo echo ${str2} >> /etc/pacman.conf
+      str2="Server = https://mirrors.ustc.edu.cn/archlinuxcn/'$'arch"
+      sudo sh -c "echo ${str1} >> /etc/pacman.conf"
+      sudo sh -c "echo ${str2} >> /etc/pacman.conf"
+      sudo pacman -S archlinuxcn-keyring
       echo "写入完成"
     fi
 }
 
 MainPrint
-
