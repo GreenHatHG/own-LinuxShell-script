@@ -1,7 +1,7 @@
 #!/bin/bash
 MainPrint()
 {
-    echo "1-更新软件源  2-更换源为中科大源  3-安装软件  4-更新系统  5-arch一键安装脚本(by helmuthdu)"
+    echo "1-更新软件源  2-更换源为中科大源  3-安装软件工具  4-更新系统  5-arch一键安装脚本(by helmuthdu)"
     read Selection
     case ${Selection} in
         1)
@@ -29,6 +29,8 @@ InstallSoftware()
     echo "1-浏览器系列"
     echo "2-编程开发"
     echo "3-github项目工具一键安装"
+    echo "4-字体"
+    echo "5-常用"
     read Selection
     case ${Selection} in
         1)
@@ -40,18 +42,24 @@ InstallSoftware()
         3)
             InstallGithubProject
             ;;
+        4)
+            InstallFonts
+            ;;
+        5)
+            InstallDaily
+            ;;
         esac
-
 }
 
 InstallBrower()
 {
     clear
     echo "可一次性安装多个软件，每选择一个按一次回车，按0结束"
-    echo "1-Chrome      google浏览器稳定版"
-    echo "2-Chromium    google浏览器测试版"
-    echo "3-Vivaldi     基于chrome，浏览器另一选择"
-    echo "4-Firefox     火狐不解释"
+    echo "1-Chrome          google浏览器稳定版"
+    echo "2-Chromium        google浏览器测试版"
+    echo "3-Vivaldi         基于chrome，浏览器另一选择"
+    echo "4-Firefox         火狐不解释"
+    echo "5-Firefox汉化包    firefox-i18n-zh-cn"
     String="sudo pacman -S "
     Exit=0
     while read Selection
@@ -72,6 +80,9 @@ InstallBrower()
                 ;;
             4) 
                 Install="${String} firefox"
+                ;;
+            5)
+                Install="${String} firefox-i18n-zh-cn"
                 ;;
         esac
         if [ ${Exit} == 1 ]
@@ -223,6 +234,83 @@ InstallGithubProject()
             ;;
     esac
 }
+
+InstallFonts()
+{
+    clear
+    echo "可一次性安装多个软件，每选择一个按一次回车，按0结束"
+    echo "1-中文推荐：Dejavu和文泉驿-微米黑"
+    echo "2-中文noto-fonts-cjk"
+    echo "3-编程字体adobe-source-code-pro-fonts"
+    String="sudo pacman -S "
+    Exit=0
+    while read Selection
+    do
+        case ${Selection} in
+            0)
+                Exit=1
+                break
+                ;;
+            1)
+                Install="${String} ttf-dejavu wqy-microhei"
+                ;;
+            2)
+                Install="${String} noto-fonts-cjk"
+                ;;  
+            3)
+                Install="${String} adobe-source-code-pro-fonts"
+                ;; 
+        esac
+        if [ ${Exit} == 1 ]
+        then
+            break
+        fi
+        String=${Install}
+    done
+    ${String} 
+}
+
+InstallDaily()
+{
+    clear
+    echo "可一次性安装多个软件，每选择一个按一次回车，按0结束"
+    echo "1-fcitx搜狗输入法 "
+    echo "2-网易云音乐"
+    echo "3-Synapse快速启动软件"
+    String="sudo pacman -S "
+    Exit=0
+    while read Selection
+    do
+        case ${Selection} in
+            0)
+                Exit=1
+                break
+                ;;
+            1)
+                Install="${String} fcitx fcitx-gtk2 fcitx-gtk3 fcitx-qt4 fcitx-qt5 fcitx-configtool fcitx-sogoupinyin"
+                str1="export GTK_IM_MODULE=fcitx"
+                str2="export QT_IM_MODULE=fcitx"
+                str3="export XMODIFIERS=\"@im=fcitx\""
+                echo ${str1} >> ~/.xprofile
+                echo ${str2} >> ~/.xprofile
+                echo ${str3} >> ~/.xprofile
+                ;;
+            2)
+                Install="${String} netease-cloud"
+                ;;
+            3)
+                Install="${String} synapse"
+                ;;
+        esac
+        if [ ${Exit} == 1 ]
+        then
+            break
+        fi
+        String=${Install}
+    done
+    ${String} 
+}
+
 UpdateMirror()
 {
 
