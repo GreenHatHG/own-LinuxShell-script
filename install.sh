@@ -100,7 +100,7 @@ InstallProgramAndEditTool()
     echo "可一次性安装多个软件，每选择一个按一次回车，按0结束"
     echo "1-Pycharm                 Python编程用的专业IDE"
     echo "2-Qt-Creator              可当C/C++编译器或者开发应用程序"
-    echo "3-Visual-Studio-Code      微软旗下编辑器"
+    echo "3-VS-Code[ArchLinuxCN]    微软旗下编辑器"
     echo "4-Atom                    GitHub旗下编辑器"
     echo "5-Android-Studio          Android app开发"
     echo "6-Sublime-Text            性感无比的编辑器"
@@ -183,6 +183,7 @@ InstallGithubProject()
     echo "5- numix-icon-theme-circle"
     echo "6- arc-theme"
     echo "7- zsh agnoster主题"
+    echo "8- numix-gtk-theme"
     read Selection
     case ${Selection} in
     1)
@@ -223,7 +224,7 @@ InstallGithubProject()
          sudo pacman -S yaourt
          yaourt -S arc-gtk-theme      
          ;; 
-    7)
+     7)
             cd /home/cc/Downloads && find -name '.zshrc' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
             wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
             wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
@@ -232,6 +233,9 @@ InstallGithubProject()
             sudo mv 10-powerline-symbols.conf /etc/fonts/conf.d/
             sudo mv PowerlineSymbols.otf /usr/share/fonts/OTF/
             ;;
+     8)
+        sudo pacman -S numix-gtk-theme
+        ;;
     esac
 }
 
@@ -277,6 +281,9 @@ InstallDaily()
     echo "1-fcitx搜狗输入法 "
     echo "2-网易云音乐"
     echo "3-Synapse快速启动软件"
+    echo "4-wps[ArchLinuxCN]"
+    echo "5-FileZilla FTP管理工具"
+    echo "6-FoxitReader"
     String="sudo pacman -S "
     Exit=0
     while read Selection
@@ -300,6 +307,15 @@ InstallDaily()
                 ;;
             3)
                 Install="${String} synapse"
+                ;;
+            4)
+                Install="${String} wps-office"
+                ;;
+            5)  
+                Install="${String} filezilla"
+                ;;
+            6)
+                Install="${String} foxitreader"
                 ;;
         esac
         if [ ${Exit} == 1 ]
