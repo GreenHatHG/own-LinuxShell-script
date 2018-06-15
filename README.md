@@ -1,4 +1,7 @@
-方便自己安装东西
+练手的Arch系安装脚本，造轮子脚本　　
+
+方便自己安装东西　　
+有什么建议可以发Issue，谢谢
 
 ```shell
 wget https://git.io/vhKr2 && mv vhKr2 vhKr2.sh && chmod +x vhKr2.sh && ./vhKr2.sh 
