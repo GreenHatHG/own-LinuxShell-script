@@ -193,10 +193,10 @@ InstallGithubProject()
         fi
         ;;
      3)
-         git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/
+         git clone https://github.com/bhilburn/powerlevel9k.git && mv powerlevel9k ~/.oh-my-zsh/custom/themes/
          BeFound="ZSH_THEME="
          newstr="ZSH_THEME="powerlevel9k/powerlevel9k""
-         filename=~/.zshrc
+         filename=~/Downloads/.zshrc
          line=`sed -n '/$BeFound/=' $filename`
          sed -i "$line d" $filename
          sed -i "$line i$newstr" $filename
@@ -215,7 +215,7 @@ InstallGithubProject()
          yaourt -S arc-gtk-theme      
          ;; 
     7)
-        find -name 'pom.xml' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
+            cd /home/cc/Downloads && find -name '.zshrc' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
             wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
             wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
             cd /usr/share/fonts && sudo mkdir OTF
