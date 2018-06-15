@@ -216,9 +216,9 @@ InstallGithubProject()
          ;; 
     7)
             cd /home/cc/Downloads && find -name '.zshrc' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
-            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
-            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
-            cd /usr/share/fonts && sudo mkdir OTF
+            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
+            wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
+            sudo mkdir /usr/share/fonts/OTF
             sudo cp 10-powerline-symbols.conf /usr/share/fonts/OTF/ 
             sudo mv 10-powerline-symbols.conf /etc/fonts/conf.d/
             sudo mv PowerlineSymbols.otf /usr/share/fonts/OTF/
@@ -252,3 +252,4 @@ UpdateMirror()
 }
 
 MainPrint
+
