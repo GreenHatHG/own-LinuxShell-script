@@ -112,6 +112,7 @@ InstallProgramAndEditTool()
     echo "12-Intellij-idea          智能的JAVA开发平台"
     echo "13-vim                    编辑神器之一"
     echo "14-emacs                  编辑神器之一"
+    echo "15-clion                  c/c++编译器，同idea一样智能"
     String="sudo pacman -S "
     Exit=0
     while read Selection
@@ -162,6 +163,9 @@ InstallProgramAndEditTool()
                 ;;
             14) 
                 Install="${String} emacs"
+                ;;
+            15) 
+                Install="${String} clion"
                 ;;
         esac
         if [ ${Exit} == 1 ]
@@ -225,7 +229,7 @@ InstallGithubProject()
          yaourt -S arc-gtk-theme      
          ;; 
      7)
-            cd /home/cc/Downloads && find -name '.zshrc' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
+            cd ~ && find -name '.zshrc' | xargs perl -pi -e 's|robbyrussell|agnoster|g'
             wget https://raw.githubusercontent.com/powerline/powerline/develop/font/10-powerline-symbols.conf
             wget https://raw.githubusercontent.com/powerline/powerline/develop/font/PowerlineSymbols.otf
             sudo mkdir /usr/share/fonts/OTF
