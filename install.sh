@@ -27,10 +27,11 @@ InstallSoftware()
 {
     echo "请选择要安装的软件"
     echo "1-浏览器系列"
-    echo "2-编程开发"
+    echo "2-编译编辑开发"
     echo "3-github项目工具一键安装"
     echo "4-字体"
     echo "5-常用"
+    echo "6-aur常见软件"
     read Selection
     case ${Selection} in
         1)
@@ -47,6 +48,9 @@ InstallSoftware()
             ;;
         5)
             InstallDaily
+            ;;
+        6)
+            InstallAurSofeware
             ;;
         esac
 }
@@ -113,6 +117,8 @@ InstallProgramAndEditTool()
     echo "13-vim                    编辑神器之一"
     echo "14-emacs                  编辑神器之一"
     echo "15-clion                  c/c++编译器，同idea一样智能"
+    echo "16-Typora                 好用的markdown编辑器"
+    echo 
     String="sudo pacman -S "
     Exit=0
     while read Selection
@@ -329,6 +335,22 @@ InstallDaily()
         String=${Install}
     done
     ${String} 
+}
+
+InstallAurSofeware()
+{
+    clear
+    echo "1- TIM"
+    echo "2- Wechat"
+    read Selection
+    case ${Selection} in
+    1)
+        yaourt -S deepin.com.qq.office
+        ;;
+    2)
+        yaourt -S deepin.com.wechat
+        ;;
+    esac
 }
 
 UpdateMirror()
