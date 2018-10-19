@@ -12,7 +12,7 @@ MainPrint()
         sudo apt-get update;;
     2)
         create_ap;;
-    easc    
+    esac    
 }
 
 create_ap()
