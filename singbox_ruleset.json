@@ -80,9 +80,10 @@
       ],
       "final": "dns_proxy",
       "strategy": "prefer_ipv4",
+      "disable_cache": false,
+      "disable_expire": false,
       "independent_cache": true,
-      "reverse_mapping": true,
-      "mapping_override": true,
+      "reverse_mapping": false,
       "fakeip": {
           "enabled": true,
           "inet4_range": "198.18.0.0/15",
