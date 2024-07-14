@@ -482,22 +482,19 @@
               "rule_set": [
                   "telegramip"
               ],
-              "outbound": "📲 电报消息",
-              "skip_resolve": true
+              "outbound": "📲 电报消息"
           },
           {
               "rule_set": [
                   "privateip"
               ],
-              "outbound": "🔒 私有网络",
-              "skip_resolve": true
+              "outbound": "🔒 私有网络"
           },
           {
               "rule_set": [
                   "cnip"
               ],
-              "outbound": "🇨🇳 直连 IP",
-              "skip_resolve": true
+              "outbound": "🇨🇳 直连 IP"
           }
       ],
       "rule_set": [
