@@ -3,7 +3,7 @@
       "clash_api": {
           "external_controller": "0.0.0.0:9999",
           "external_ui": "metacubexd",
-          "external_ui_download_url": "https://cdn.jsdelivr.net/gh/DustinWin/clash_singbox-tools@main/Clash-dashboard/metacubexd.tar.gz",
+          "external_ui_download_url": "https://ghproxy.net/https://github.com/MetaCubeX/Yacd-meta/archive/refs/heads/gh-pages.zip",
           "external_ui_download_detour": "DIRECT",
           "default_mode": "rule"
       },
@@ -90,13 +90,21 @@
           "inet6_range": "fc00::/18"
       }
   },
+  "ntp": {
+    "enabled": true,
+    "server": "ntp.aliyun.com",
+    "server_port": 123,
+    "interval": "30m",
+    "detour": "DIRECT"
+  },
   "inbounds": [
       {
           "type": "mixed",
           "tag": "mixed-in",
           "listen": "::",
           "listen_port": 7890,
-          "sniff": false
+          "sniff": true,
+          "sniff_override_destination": false
       },
       {
           "type": "direct",
@@ -124,7 +132,8 @@
               "🇸🇬 新加坡节点",
               "🇺🇸 美国节点",
               "其他"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "📈 网络测试",
@@ -137,7 +146,8 @@
               "🇸🇬 新加坡节点",
               "🇺🇸 美国节点",
               "其他"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🤖 人工智能",
@@ -150,7 +160,8 @@
               "🇸🇬 新加坡节点",
               "🇺🇸 美国节点",
               "其他"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🎮 游戏服务",
@@ -158,7 +169,8 @@
           "outbounds": [
               "🎯 全球直连",
               "🈯 节点指定"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "Ⓜ️ 微软服务",
@@ -166,7 +178,8 @@
           "outbounds": [
               "🎯 全球直连",
               "🈯 节点指定"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🇬 谷歌服务",
@@ -174,7 +187,8 @@
           "outbounds": [
               "🎯 全球直连",
               "🈯 节点指定"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🍎 苹果服务",
@@ -182,7 +196,8 @@
           "outbounds": [
               "🎯 全球直连",
               "🈯 节点指定"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🇨🇳 直连域名",
@@ -190,7 +205,8 @@
           "outbounds": [
               "🎯 全球直连",
               "🈯 节点指定"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🇨🇳 直连 IP",
@@ -198,7 +214,8 @@
           "outbounds": [
               "🎯 全球直连",
               "🈯 节点指定"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🪜 代理域名",
@@ -206,35 +223,40 @@
           "outbounds": [
               "🈯 节点指定",
               "🎯 全球直连"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "📲 电报消息",
           "type": "selector",
           "outbounds": [
               "🈯 节点指定"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🔒 私有网络",
           "type": "selector",
           "outbounds": [
               "🎯 全球直连"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🛑 广告拦截",
           "type": "selector",
           "outbounds": [
               "REJECT"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🎯 全球直连",
           "type": "selector",
           "outbounds": [
               "DIRECT"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "REJECT",
@@ -256,7 +278,8 @@
               "🇸🇬 新加坡节点",
               "🇺🇸 美国节点",
               "其他"
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "dns-out",
@@ -277,7 +300,8 @@
                       "🇭🇰|HK|hk|香港|港|HongKong"
                   ]
               }
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🇹🇼 台湾节点",
@@ -294,7 +318,8 @@
                       "🇹🇼|TW|tw|台湾|臺灣|台|Taiwan"
                   ]
               }
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🇯🇵 日本节点",
@@ -311,7 +336,8 @@
                       "🇯🇵|JP|jp|日本|日|Japan"
                   ]
               }
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🇸🇬 新加坡节点",
@@ -328,7 +354,8 @@
                       "🇸🇬|SG|sg|新加坡|狮|Singapore"
                   ]
               }
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "🇺🇸 美国节点",
@@ -345,7 +372,8 @@
                       "🇺🇸|US|us|美国|美|United States"
                   ]
               }
-          ]
+          ],
+          "interrupt_exist_connections": true
       },
       {
           "tag": "其他",
@@ -362,7 +390,8 @@
                       "🇭🇰|HK|hk|香港|香|🇹🇼|TW|tw|台湾|台|🇸🇬|SG|sg|新加坡|狮|🇯🇵|JP|jp|日本|日|🇺🇸|US|us|美国|美|网站|剩余|流量|过期|时间|期|地址|更新订阅"
                   ]
               }
-          ]
+          ],
+          "interrupt_exist_connections": true
       }
   ],
   "route": {
