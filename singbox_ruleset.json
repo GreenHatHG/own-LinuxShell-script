@@ -90,13 +90,6 @@
           "inet6_range": "fc00::/18"
       }
   },
-  "ntp": {
-    "enabled": true,
-    "server": "ntp.aliyun.com",
-    "server_port": 123,
-    "interval": "30m",
-    "detour": "DIRECT"
-  },
   "inbounds": [
     {
       "type": "tun",
