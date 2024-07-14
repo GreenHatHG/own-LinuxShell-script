@@ -99,6 +99,26 @@
   },
   "inbounds": [
     {
+      "type": "tun",
+      "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
+      "gso": false,
+      "auto_route": true,
+      "strict_route": true,
+      "endpoint_independent_nat": false,
+      "stack": "mixed",
+      "exclude_package": ["com.android.captiveportallogin"],
+      "platform": {
+        "http_proxy": {
+          "enabled": true,
+          "server": "127.0.0.1",
+          "server_port": 7890
+        }
+      },
+      "sniff": true,
+      "sniff_override_destination": false
+    },
+    {
       "type": "mixed",
       "listen": "::",
       "listen_port": 7890,
