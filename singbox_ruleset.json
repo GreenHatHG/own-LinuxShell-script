@@ -24,7 +24,7 @@
           },
           {
               "tag": "dns_direct",
-              "address": "https://223.5.5.5/dns-query",
+              "address": "https://1.12.12.12/dns-query",
               "detour": "DIRECT"
           },
           {
