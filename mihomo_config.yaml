@@ -1,0 +1,257 @@
+mixed-port: 7890            # 混合端口：HTTP(S)和SOCKS5共用端口
+tcp-concurrent: true        # TCP并发：允许并发连接TCP,提高并发性能
+unified-delay: false         # 统一延迟：# 更换延迟计算方式,去除握手等额外延迟
+allow-lan: true            # 局域网连接：允许其他设备经过本机代理
+bind-address: "*"          # 监听地址：*表示绑定所有IP地址
+# 进程匹配模式
+# 路由器上请设置为 off
+# always 开启，强制匹配所有进程
+# strict 默认，由 Clash 判断是否开启
+# off 不匹配进程，推荐在路由器上使用此模式
+find-process-mode: strict
+ipv6: false               # IPv6开关：是否启用IPv6支持
+
+# 运行模式(任选其一):
+# rule: 规则模式 - 根据规则匹配来选择代理
+# global: 全局模式 - 全部流量走代理
+# direct: 直连模式 - 全部流量不走代理
+mode: rule
+
+# 日志等级(按详细程度排序):
+# debug: 调试
+# info: 信息
+# warning: 警告
+# error: 错误
+# silent: 静默
+log-level: warning
+
+external-controller: 0.0.0.0:9999
+external-ui: ui
+external-ui-url: "https://ghproxy.net/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+secret: "mihomo_1134#@"
+
+geodata-mode: true
+geox-url:
+  geoip: "https://ghproxy.net/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat"
+  geosite: "https://ghproxy.net/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://ghproxy.net/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb"
+  asn: "https://ghproxy.net/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+
+keep-alive-interval: 1800
+
+global-client-fingerprint: chrome
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# 域名嗅探
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+# tun:
+#   enable: true
+#   stack: mixed
+#   dns-hijack:
+#     - "any:53"
+#     - "tcp://any:53"
+#   auto-route: true
+#   auto-redirect: true
+#   auto-detect-interface: true
+
+#------------------------DNS 配置------------------------#
+dns:
+  enable: true
+  ipv6: false              # DNS解析IPv6  respect-rules: true
+  listen: 0.0.0.0:53       # DNS监听地址
+  enhanced-mode: fake-ip   # DNS模式: fake-ip或redir-host
+  use-hosts: true          # 使用hosts文件
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:                 # Fake-IP过滤清单
+    - "*.lan"                     # 本地域名
+    - "localhost.ptlogin2.qq.com" # QQ登录
+    - '+.srv.nintendo.net'
+    - '+.stun.playstation.net'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - '+.xboxlive.com'
+    - 'msftconnecttest.com'
+    - 'xbox.*.microsoft.com'
+    - '*.battlenet.com.cn'
+    - '*.battlenet.com'
+    - '*.blzstatic.cn'
+    - '*.battle.net'
+  default-nameserver:	# 默认 DNS，用于解析 DNS 服务器 的域名，必须为 IP，可为加密 DNS；
+    - 223.5.5.5            # 阿里DNS
+    - 119.29.29.29         # 腾讯DNS
+  nameserver:			# 默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver，则所有域名都由 nameserver 解析；
+    - https://doh.pub/dns-query                # DNSPod DOH
+    - https://dns.alidns.com/dns-query         # 阿里 DOH
+  proxy-server-nameserver:	# 代理节点域名解析服务器，仅用于解析代理节点的域名；
+    - https://doh.pub/dns-query                # DNSPod DOH
+    - https://dns.alidns.com/dns-query         # 阿里 DOH
+  nameserver-policy:	# 指定域名查询的解析服务器，可使用 geosite，优先于 nameserver/fallback 查询；
+    "rule-set:cn_domain,private_domain":
+      - https://doh.pub/dns-query                # DNSPod DOH
+      - https://dns.alidns.com/dns-query         # 阿里 DOH
+    "rule-set:geolocation-!cn":
+      - https://dns.google/dns-query             # Google DOH
+      - https://cloudflare-dns.com/dns-query     # Cloudflare DOH
+
+
+proxies: 
+  - name: "直连"
+    type: direct
+    udp: true
+
+# 锚点 - 节点订阅的参数 [每24小时更新一次订阅节点，每 300 秒一次健康检查]
+NodeParam: &NodeParam {type: http, interval: 86400, health-check: {enable: true, url: 'http://cp.cloudflare.com', interval: 300}}
+proxy-providers:
+  provider1:
+    url: ""
+    <<: *NodeParam
+
+# 节点筛选
+FilterHK: &FilterHK '^(?=.*(香港|HK|Hong|🇭🇰))^(?!.*(网站|地址|剩余|过期|时间|有效|网址|禁止|邮箱|发布|客服|订阅|节点)).*$'
+FilterJP: &FilterJP '^(?=.*(日本|川日|东京|大阪|泉日|埼玉|JP|Japan|🇯🇵))^(?!.*(网站|地址|剩余|过期|时间|有效|网址|禁止|邮箱|发布|客服|订阅|节点)).*$'
+FilterKR: &FilterKR '^(?=.*(韩国|韓|首尔|KR|Korea|🇰🇷))^(?!.*(网站|地址|剩余|过期|时间|有效|网址|禁止|邮箱|发布|客服|订阅|节点)).*$'
+FilterSG: &FilterSG '^(?=.*(新加坡|狮城|SG|Singapore|🇸🇬))^(?!.*(网站|地址|剩余|过期|时间|有效|网址|禁止|邮箱|发布|客服|订阅|节点)).*$'
+FilterUS: &FilterUS '^(?=.*(美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|America|🇺🇸))^(?!.*(网站|地址|剩余|过期|时间|有效|网址|禁止|邮箱|发布|客服|订阅|节点)).*$'
+FilterUK: &FilterUK '^(?=.*(英国|伦敦|UK|United Kingdom|🇬🇧))^(?!.*(网站|地址|剩余|过期|时间|有效|网址|禁止|邮箱|发布|客服|订阅|节点)).*$'
+FilterFR: &FilterFR '^(?=.*(法国|FR|France|🇫🇷))^(?!.*(网站|地址|剩余|过期|时间|有效|网址|禁止|邮箱|发布|客服|订阅|节点)).*$'
+FilterDE: &FilterDE '^(?=.*(德国|DE|Germany|🇩🇪))^(?!.*(网站|地址|剩余|过期|时间|有效|网址|禁止|邮箱|发布|客服|订阅|节点)).*$'
+FilterTW: &FilterTW '^(?=.*(台湾|TW|Taiwan|Wan|🇹🇼|🇨🇳))^(?!.*(网站|地址|剩余|过期|时间|有效|网址|禁止|邮箱|发布|客服|订阅|节点)).*$'
+FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'
+
+Select: &Select {type: select, url: 'http://cp.cloudflare.com', disable-udp: false, hidden: false, include-all: true}
+Auto: &Auto {type: url-test, url: 'http://cp.cloudflare.com', interval: 300, tolerance: 50, disable-udp: false, hidden: true, include-all: true}
+
+proxy-groups:
+
+  - {name: 节点选择, type: select, proxies: [手动选择, 自动选择, DIRECT], url: https://cp.cloudflare.com, icon: https://ghproxy.net/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Static.png}
+  - {name: 手动选择, type: select, proxies: [AllIn - 手动选择, 🇭🇰 - 手动选择, 🇯🇵 - 手动选择, 🇰🇷 - 手动选择, 🇸🇬 - 手动选择, 🇺🇸 - 手动选择, 🇬🇧 - 手动选择, 🇫🇷 - 手动选择, 🇩🇪 - 手动选择, 🇹🇼 - 手动选择], url: https://cp.cloudflare.com, icon: https://ghproxy.net/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Cylink.png}
+  - {name: 自动选择, type: select, proxies: [🇭🇰 - 自动选择, 🇯🇵 - 自动选择, 🇰🇷 - 自动选择, 🇸🇬 - 自动选择, 🇺🇸 - 自动选择, 🇬🇧 - 自动选择, 🇫🇷 - 自动选择, 🇩🇪 - 自动选择, 🇹🇼 - 自动选择], url: https://cp.cloudflare.com, icon: https://ghproxy.net/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Urltest.png}
+  - {name: Telegram, type: select, proxies: [节点选择, 🇭🇰 - 自动选择, 🇯🇵 - 自动选择, 🇰🇷 - 自动选择, 🇸🇬 - 自动选择, 🇺🇸 - 自动选择, 🇬🇧 - 自动选择, 🇫🇷 - 自动选择, 🇩🇪 - 自动选择, 🇹🇼 - 自动选择], icon: https://ghproxy.net/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Telegram.png}
+  - {name: AIGC, type: select, proxies: [🇯🇵 - 自动选择, 节点选择, 🇺🇸 - 自动选择, 🇭🇰 - 自动选择, 🇰🇷 - 自动选择, 🇸🇬 - 自动选择, 🇺🇸 - 自动选择, 🇬🇧 - 自动选择, 🇫🇷 - 自动选择, 🇩🇪 - 自动选择, 🇹🇼 - 自动选择], icon: https://ghproxy.net/https://raw.githubusercontent.com/Orz-3/mini/master/Color/OpenAI.png}
+  - {name: Twitter, type: select, proxies: [节点选择, 🇺🇸 - 自动选择, 🇭🇰 - 自动选择, 🇯🇵 - 自动选择, 🇰🇷 - 自动选择, 🇸🇬 - 自动选择, 🇺🇸 - 自动选择, 🇬🇧 - 自动选择, 🇫🇷 - 自动选择, 🇩🇪 - 自动选择, 🇹🇼 - 自动选择], icon: https://ghproxy.net/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Twitter.png}
+  - {name: YouTube, type: select, proxies: [节点选择, 🇯🇵 - 自动选择, 🇺🇸 - 自动选择, 🇭🇰 - 自动选择, 🇰🇷 - 自动选择, 🇸🇬 - 自动选择, 🇺🇸 - 自动选择, 🇬🇧 - 自动选择, 🇫🇷 - 自动选择, 🇩🇪 - 自动选择, 🇹🇼 - 自动选择], icon: https://ghproxy.net/https://raw.githubusercontent.com/Orz-3/mini/master/Color/YouTube.png}
+  - {name: Spotify, type: select, proxies: [节点选择, 🇯🇵 - 自动选择, 🇺🇸 - 自动选择, 🇭🇰 - 自动选择, 🇰🇷 - 自动选择, 🇸🇬 - 自动选择, 🇺🇸 - 自动选择, 🇬🇧 - 自动选择, 🇫🇷 - 自动选择, 🇩🇪 - 自动选择, 🇹🇼 - 自动选择], icon: https://ghproxy.net/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Spotify.png}
+
+    # 自动选择
+  - {name: 🇭🇰 - 自动选择, <<: *Auto, filter: *FilterHK}
+  - {name: 🇯🇵 - 自动选择, <<: *Auto, filter: *FilterJP}
+  - {name: 🇰🇷 - 自动选择, <<: *Auto, filter: *FilterKR}
+  - {name: 🇸🇬 - 自动选择, <<: *Auto, filter: *FilterSG}
+  - {name: 🇺🇸 - 自动选择, <<: *Auto, filter: *FilterUS}
+  - {name: 🇬🇧 - 自动选择, <<: *Auto, filter: *FilterUK}
+  - {name: 🇫🇷 - 自动选择, <<: *Auto, filter: *FilterFR}
+  - {name: 🇩🇪 - 自动选择, <<: *Auto, filter: *FilterDE}
+  - {name: 🇹🇼 - 自动选择, <<: *Auto, filter: *FilterTW}
+
+  # 手动选择
+  - {name: 🇭🇰 - 手动选择, <<: *Select, filter: *FilterHK}
+  - {name: 🇯🇵 - 手动选择, <<: *Select, filter: *FilterJP}
+  - {name: 🇰🇷 - 手动选择, <<: *Select, filter: *FilterKR}
+  - {name: 🇸🇬 - 手动选择, <<: *Select, filter: *FilterSG}
+  - {name: 🇺🇸 - 手动选择, <<: *Select, filter: *FilterUS}
+  - {name: 🇬🇧 - 手动选择, <<: *Select, filter: *FilterUK}
+  - {name: 🇫🇷 - 手动选择, <<: *Select, filter: *FilterFR}
+  - {name: 🇩🇪 - 手动选择, <<: *Select, filter: *FilterDE}
+  - {name: 🇹🇼 - 手动选择, <<: *Select, filter: *FilterTW}
+
+  # 全部节点
+  - {name: AllIn - 手动选择, <<: *Select, filter: *FilterAll}
+  - {name: AllIn - 自动选择, <<: *Auto, filter: *FilterAll}
+
+
+rules:
+  - RULE-SET,reject_ip,REJECT
+  - RULE-SET,reject_non_ip,REJECT
+  - RULE-SET,reject_domainset,REJECT
+  - RULE-SET,reject_non_ip_drop,REJECT-DROP
+  - RULE-SET,reject_non_ip_no_drop,REJECT
+  - RULE-SET,private_ip,直连,no-resolve
+  - RULE-SET,ai_non_ip,AIGC
+  - RULE-SET,twitter_domain,Twitter
+  - RULE-SET,youtube_domain,YouTube
+  - RULE-SET,telegram_domain,Telegram
+  - RULE-SET,spotify_domain,Spotify
+  - RULE-SET,cn_domain,直连
+  - RULE-SET,geolocation-!cn,节点选择
+  - RULE-SET,telegram_ip,Telegram
+  - RULE-SET,twitter_ip,Twitter
+  - RULE-SET,cn_ip,直连
+  - MATCH,节点选择
+
+
+RuleSet_classical: &RuleSet_classical {type: http, behavior: classical, interval: 43200, format: text, proxy: 节点选择}
+RuleSet_domain: &RuleSet_domain {type: http, behavior: domain, interval: 43200, format: text, proxy: 节点选择}
+RuleSet_ipcidr: &RuleSet_ipcidr {type: http, behavior: ipcidr, interval: 43200, format: text, proxy: 节点选择}
+
+rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+rule-providers:
+  private_domain:
+    <<: *domain
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"
+  cn_domain:
+    <<: *domain
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"
+  twitter_domain:
+    <<: *domain
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/twitter.mrs"
+  youtube_domain:
+    <<: *domain
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"
+  telegram_domain:
+    <<: *domain
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"
+  spotify_domain:
+    <<: *domain
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"
+  geolocation-!cn:
+    <<: *domain
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"
+  private_ip:
+    <<: *ip
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs"
+  cn_ip:
+    <<: *ip
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"
+  twitter_ip:
+    <<: *ip
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/twitter.mrs"
+  telegram_ip:
+    <<: *ip
+    url: "https://ghproxy.net/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"
+
+  reject_non_ip_no_drop:
+    <<: *RuleSet_classical
+    url: 'https://ruleset.skk.moe/Clash/non_ip/reject-no-drop.txt'
+  reject_non_ip_drop:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/non_ip/reject-drop.txt
+  reject_non_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/non_ip/reject.txt
+  reject_domainset:
+    <<: *RuleSet_domain
+    url: https://ruleset.skk.moe/Clash/domainset/reject.txt
+  reject_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/ip/reject.txt
+  ai_non_ip:
+    <<: *RuleSet_classical
+    url: https://ruleset.skk.moe/Clash/non_ip/ai.txt
